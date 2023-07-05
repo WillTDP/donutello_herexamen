@@ -37,24 +37,37 @@ onMounted(() => {
   function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
+    //spin
+    if (donut) {
+      donut.scene.rotation.y += 0.01;
+      //angle the donut a bit towards the camera
+      donut.scene.rotation.x += 0.005;
+    }
   }
 
   animate();
 
   document.querySelector('#recolor').addEventListener('click', function (e) {
-    e.preventDefault();
-    // recolor
-    donut.scene.traverse(function (child) {
-      if (child.isMesh) {
-        child.material.color.setHex(Math.random() * 0xffffff);
-      }
-    });
-  });
+  e.preventDefault();
+  
+  // Access the 'glaze' object directly
+  const glazeMesh = donut.scene.getObjectByName('glaze');
+  
+  // Check if the 'glaze' object is found and is a mesh
+  if (glazeMesh && glazeMesh.isMesh) {
+    // Modify properties of the 'glaze' mesh (Torus.004)
+    glazeMesh.material.color.setHex(Math.random() * 0xffffff);
+  }
+});
+
+
 });
 </script>
 
 <template>
   <a href="#" id="recolor">Recolor!</a>
+
+
   <div id="container" style="width: 400px; height: 400px;"></div>
 </template>
 
