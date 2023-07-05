@@ -9,13 +9,13 @@ onMounted(() => {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
     75,
-    window.innerWidth / window.innerHeight,
+    400 / 400, // Adjusted width and height
     0.1,
     1000
   );
 
   const renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(400, 400); // Adjusted width and height
   document.getElementById('container').appendChild(renderer.domElement);
 
   // add light
@@ -25,12 +25,12 @@ onMounted(() => {
 
   // load donut.glb
   const loader = new GLTFLoader();
-    loader.load('../../public/model/donut.glb', function (gltf) {
-        // scale
-        donut = gltf;
-        donut.scene.scale.set(10, 10, 10);
-        scene.add(donut.scene);
-    });
+  loader.load('../../public/model/donut.glb', function (gltf) {
+    // scale
+    donut = gltf;
+    donut.scene.scale.set(35, 35, 35);
+    scene.add(donut.scene);
+  });
 
   camera.position.z = 5;
 
@@ -52,17 +52,15 @@ onMounted(() => {
   });
 });
 </script>
-  
-  <template>
-    <a href="#" id="recolor">Recolor!</a>
-    <div id="container" style="width: 400px; height: 400px;"></div>
-  </template>
-  
 
-  <style>
-  #container {
-    width: 400px;
-    height: 400px;
-  }
-  </style>
-  
+<template>
+  <a href="#" id="recolor">Recolor!</a>
+  <div id="container" style="width: 400px; height: 400px;"></div>
+</template>
+
+<style>
+#container {
+  width: 400px;
+  height: 400px;
+}
+</style>
