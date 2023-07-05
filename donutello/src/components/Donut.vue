@@ -25,12 +25,12 @@ onMounted(() => {
 
   // load donut.glb
   const loader = new GLTFLoader();
-  loader.load('../assets/donut.glb', function (gltf) {
-    // scale
-    donut = gltf;
-    donut.scene.scale.set(10, 10, 10);
-    scene.add(donut.scene);
-  });
+    loader.load('../../public/model/donut.glb', function (gltf) {
+        // scale
+        donut = gltf;
+        donut.scene.scale.set(10, 10, 10);
+        scene.add(donut.scene);
+    });
 
   camera.position.z = 5;
 
@@ -54,8 +54,8 @@ onMounted(() => {
 </script>
   
   <template>
-    <div id="container" style="width: 400px; height: 400px;"></div>
     <a href="#" id="recolor">Recolor!</a>
+    <div id="container" style="width: 400px; height: 400px;"></div>
   </template>
   
 
