@@ -47,17 +47,22 @@ onMounted(() => {
 
   animate();
 
-  document.querySelector('#recolor').addEventListener('click', function (e) {
-  e.preventDefault();
-  
-  // Access the 'glaze' object directly
-  const glazeMesh = donut.scene.getObjectByName('glaze');
-  
-  // Check if the 'glaze' object is found and is a mesh
-  if (glazeMesh && glazeMesh.isMesh) {
-    // Modify properties of the 'glaze' mesh (Torus.004)
-    glazeMesh.material.color.setHex(Math.random() * 0xffffff);
-  }
+var elements = document.querySelectorAll('.recolour');
+elements.forEach(function(element) {
+  element.addEventListener('click', function(e) {
+    e.preventDefault();
+    var colour = this.dataset.colour;
+    console.log(colour);
+
+    // Access the 'glaze' object directly
+    const glazeMesh = donut.scene.getObjectByName('glaze');
+
+    // Check if the 'glaze' object is found and is a mesh
+    if (glazeMesh && glazeMesh.isMesh) {
+      // Modify properties of the 'glaze' mesh (Torus.004)
+      glazeMesh.material.color.setHex(colour);
+    }
+  });
 });
 
 
@@ -65,8 +70,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <a href="#" id="recolor">Recolor!</a>
-
+  <a href="#" class="recolour" data-colour="0xd52417">Red </a>
+  <a href="#" class="recolour" data-colour="0x54A232">Green </a>
+  <a href="#" class="recolour" data-colour="0x6fa8dc">Blue </a>
 
   <div id="container" style="width: 400px; height: 400px;"></div>
 </template>
