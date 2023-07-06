@@ -97,8 +97,20 @@ elements.forEach(function(element) {
           // Modify properties of the 'topping' mesh
           child.visible = !child.visible;
           if (child.visible) {
+
+            // Change the topping text
+            element.innerHTML = 'Remove topping';
+              // Add class for styling
+            element.classList.add('removed');
+            element.classList.remove('added');
+
             // Show the topping colors HTML
-            element.nextElementSibling.style.display = 'block';
+            element.nextElementSibling.style.display = 'flex';
+            element.nextElementSibling.style.flexDirection = 'column';
+            element.nextElementSibling.style.alignItems = 'flex-start';
+            element.nextElementSibling.style.justifyContent = 'flex-start';
+            element.nextElementSibling.style.marginTop = '10px';
+            element.nextElementSibling.style.padding = '10px';
             //colour the topping
             //parse the colour from topping-colour
           var elements = document.querySelectorAll('.topping-colour');
@@ -112,6 +124,13 @@ elements.forEach(function(element) {
               });
             });
           } else {
+            // Change the topping text
+            element.innerHTML = 'Add topping';
+
+            // Add class for styling
+            element.classList.add('added');
+            element.classList.remove('removed');
+
             // Hide the topping colors HTML
             element.nextElementSibling.style.display = 'none';
           }
@@ -126,39 +145,97 @@ elements.forEach(function(element) {
 </script>
 
 <template>
-  <div> 
-    <p>Glazing Colour</p> 
-    <div>
-      <a href="#" class="recolour" data-colour="0xd52417">Red </a>
-      <a href="#" class="recolour" data-colour="0x54A232">Green </a>
-      <a href="#" class="recolour" data-colour="0x6fa8dc">Blue </a>
-    </div>
-  </div>
-  <div>
-  <div>
-    <p>Topping</p>
-    <div>
-      <a href="#" class="topping">topping </a>
-      <div class="topping-colors">
-        <a href="#" class="topping-colour" data-colour="0xd52417">Red Topping </a>
-        <a href="#" class="topping-colour" data-colour="0x54A232">Green Topping </a>
-        <a href="#" class="topping-colour" data-colour="0x6fa8dc">Blue Topping </a>
+
+  <div class="everything">
+    <div id="container" style="width: 400px; height: 400px;"></div>
+
+    <div class="buttons">
+      <div> 
+        <p>Glazing Colour</p> 
+        <div>
+          <a href="#" class="recolour" data-colour="0xd52417">Red </a>
+          <a href="#" class="recolour" data-colour="0x54A232">Green </a>
+          <a href="#" class="recolour" data-colour="0x6fa8dc">Blue </a>
+        </div>
+      </div>
+      <div>
+      <div>
+        <p class="topping">Topping</p>
+        <div>
+          <a href="#" class="topping added">Add topping</a>
+          <div class="topping-colors">
+            <a href="#" class="topping-colour" data-colour="0xd52417">Red Topping </a>
+            <a href="#" class="topping-colour" data-colour="0x54A232">Green Topping </a>
+            <a href="#" class="topping-colour" data-colour="0x6fa8dc">Blue Topping </a>
+          </div>
+        </div>
       </div>
     </div>
+    <a href="#" class="send">Order</a>
+    </div>
   </div>
-</div>
 
-  <a href="#">Send</a>
-
-  <div id="container" style="width: 400px; height: 400px;"></div>
 </template>
 
-<style>
+<style scoped>
+.everything {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 #container {
   width: 400px;
   height: 400px;
 }
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 20px;
+}
+
+.topping {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.topping a {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: aqua;
+  color: white;
+}
+
+.topping.added {
+  background-color: darkblue;
+  color: white;
+
+}
+
+.topping.removed {
+  color: white;
+  background-color: red;
+}
+
 .topping-colors {
   display: none;
+}
+
+.send {
+  margin-top: 20px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #d517a9;
+  color: white;
+  text-decoration: none;
+  border-radius: 15px;
 }
 </style>
