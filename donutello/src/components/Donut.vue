@@ -30,6 +30,20 @@ onMounted(() => {
     donut = gltf;
     donut.scene.scale.set(35, 35, 35);
     scene.add(donut.scene);
+
+    // Access the 'glaze' object directly
+  const glazeObject = donut.scene.getObjectByName('glaze');
+
+  // Check if the 'glaze' object is found and is an object3D
+  if (glazeObject && glazeObject.isObject3D) {
+    // Traverse the children of the 'glaze' object
+    glazeObject.traverse(function (child) {
+      if (child.name === 'topping' && child.isMesh) {
+        // Hide the topping by default
+        child.visible = false;
+      }
+    });
+  }
   });
 
   camera.position.z = 5;
@@ -68,40 +82,42 @@ elements.forEach(function(element) {
 
 var elements = document.querySelectorAll('.topping');
 elements.forEach(function(element) {
+  
   element.addEventListener('click', function(e) {
     e.preventDefault();
-    var colour = this.dataset.colour;
-    console.log(colour);
-
+    
     // Access the 'glaze' object directly
     const glazeObject = donut.scene.getObjectByName('glaze');
-
-    // Check if the 'glaze' object is found and is a mesh
-   // Check if the 'glaze' object is found and is an object3D
-  if (glazeObject && glazeObject.isObject3D) {
-    // Traverse the children of the 'glaze' object
-    glazeObject.traverse(function (child) {
-      if (child.name === 'topping' && child.isMesh) {
-        // Modify properties of the 'topping' mesh
-        child.visible = !child.visible;
-        if (child.visible) {
+    
+    // Check if the 'glaze' object is found and is an object3D
+    if (glazeObject && glazeObject.isObject3D) {
+      // Traverse the children of the 'glaze' object
+      glazeObject.traverse(function (child) {
+        if (child.name === 'topping' && child.isMesh) {
+          // Modify properties of the 'topping' mesh
+          child.visible = !child.visible;
+          if (child.visible) {
+            // Show the topping colors HTML
+            element.nextElementSibling.style.display = 'block';
+            //colour the topping
             //parse the colour from topping-colour
-            var elements = document.querySelectorAll('.topping-colour');
+          var elements = document.querySelectorAll('.topping-colour');
             elements.forEach(function(element) {
-            element.addEventListener('click', function(e) {
-                e.preventDefault();
-            var colour = this.dataset.colour;
-            console.log(colour);
-             child.material.opacity = 1;
-            child.material.color.setHex(colour);
+              element.addEventListener('click', function(e) {
+              e.preventDefault();
+              var colour = this.dataset.colour;
+              console.log(colour);
+              child.material.opacity = 1;
+              child.material.color.setHex(colour);
+              });
             });
-        });
-        } else {
-          child.material.opacity = 0;
+          } else {
+            // Hide the topping colors HTML
+            element.nextElementSibling.style.display = 'none';
+          }
         }
-      }
-    });
-  }
+      });
+    }
   });
 });
 
@@ -110,14 +126,29 @@ elements.forEach(function(element) {
 </script>
 
 <template>
-  <a href="#" class="recolour" data-colour="0xd52417">Red </a>
-  <a href="#" class="recolour" data-colour="0x54A232">Green </a>
-  <a href="#" class="recolour" data-colour="0x6fa8dc">Blue </a>
-  
-  <a href="#" class="topping">topping </a>
-  <a href="#" class="topping-colour" data-colour="0xd52417">Red Topping </a>
-  <a href="#" class="topping-colour" data-colour="0x54A232">Green Topping </a>
-  <a href="#" class="topping-colour" data-colour="0x6fa8dc">Blue Topping </a>
+  <div> 
+    <p>Glazing Colour</p> 
+    <div>
+      <a href="#" class="recolour" data-colour="0xd52417">Red </a>
+      <a href="#" class="recolour" data-colour="0x54A232">Green </a>
+      <a href="#" class="recolour" data-colour="0x6fa8dc">Blue </a>
+    </div>
+  </div>
+  <div>
+  <div>
+    <p>Topping</p>
+    <div>
+      <a href="#" class="topping">topping </a>
+      <div class="topping-colors">
+        <a href="#" class="topping-colour" data-colour="0xd52417">Red Topping </a>
+        <a href="#" class="topping-colour" data-colour="0x54A232">Green Topping </a>
+        <a href="#" class="topping-colour" data-colour="0x6fa8dc">Blue Topping </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <a href="#">Send</a>
 
   <div id="container" style="width: 400px; height: 400px;"></div>
 </template>
@@ -126,5 +157,8 @@ elements.forEach(function(element) {
 #container {
   width: 400px;
   height: 400px;
+}
+.topping-colors {
+  display: none;
 }
 </style>
