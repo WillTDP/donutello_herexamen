@@ -121,6 +121,19 @@ onMounted(() => {
               element.nextElementSibling.style.justifyContent = 'flex-start';
               element.nextElementSibling.style.marginTop = '10px';
               element.nextElementSibling.style.padding = '10px';
+              //colour the topping
+              //parse the colour from topping-colour
+              var elements = document.querySelectorAll('.topping-colour');
+                elements.forEach(function(element) {
+                  element.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  var colour = this.dataset.colour;
+                  console.log(colour);
+                  child.material.opacity = 1;
+                  child.material.color.setHex(colour);
+                  });
+                });
+                
             } else {
               // Change the topping text back to "Add topping"
               element.innerHTML = 'Add topping';
@@ -141,7 +154,7 @@ onMounted(() => {
     });
   });
 
-  var toppingColourElements = document.querySelectorAll('.topping-colour');
+ /*var toppingColourElements = document.querySelectorAll('.topping-colour');
   toppingColourElements.forEach(function (element) {
     element.addEventListener('click', function (e) {
       e.preventDefault();
@@ -157,9 +170,14 @@ onMounted(() => {
             selectedDonut.topping = colour;
           }
         });
+      } else {
+        console.log('No glaze object found');
+
+        // selectedDonut topping is no
+        selectedDonut.topping = 'no';
       }
     });
-  });
+  });*/
 });
 
 const placeOrder = () => {
