@@ -3,6 +3,12 @@ import { onMounted, ref } from 'vue';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
+const selectedDonut = ref({
+  colour: '',
+  topping: 'no', // Default topping is "no"
+  id: null
+});
+
 onMounted(() => {
   let donut = null;
 
@@ -39,6 +45,8 @@ onMounted(() => {
       // Traverse the children of the 'glaze' object
       glazeObject.traverse(function (child) {
         if (child.name === 'topping' && child.isMesh) {
+          // default topping color is red
+          child.material.color.setHex(0xd52417);
           // Hide the topping by default
           child.visible = false;
         }
@@ -61,7 +69,7 @@ onMounted(() => {
 
   animate();
 
-  // Rest of your event listeners setup code
+  // Donut recolouring code
   var elements = document.querySelectorAll('.recolour');
   elements.forEach(function (element) {
     element.addEventListener('click', function (e) {
@@ -84,50 +92,54 @@ onMounted(() => {
   });
 
   var toppingElements = document.querySelectorAll('.topping');
-toppingElements.forEach(function (element) {
-  element.addEventListener('click', function (e) {
-    e.preventDefault();
+  toppingElements.forEach(function (element) {
+    element.addEventListener('click', function (e) {
+      e.preventDefault();
 
-    // Access the 'glaze' object directly
-    const glazeObject = donut.scene.getObjectByName('glaze');
+      // Access the 'glaze' object directly
+      const glazeObject = donut.scene.getObjectByName('glaze');
 
-    // Check if the 'glaze' object is found and is an object3D
-    if (glazeObject && glazeObject.isObject3D) {
-      // Traverse the children of the 'glaze' object
-      glazeObject.traverse(function (child) {
-        if (child.name === 'topping' && child.isMesh) {
-          // Modify properties of the 'topping' mesh
-          child.visible = !child.visible;
+      // Check if the 'glaze' object is found and is an object3D
+      if (glazeObject && glazeObject.isObject3D) {
+        // Traverse the children of the 'glaze' object
+        glazeObject.traverse(function (child) {
+          if (child.name === 'topping' && child.isMesh) {
+            // Modify properties of the 'topping' mesh
+            child.visible = !child.visible;
 
-          if (child.visible) {
-            // Change the topping text
-            element.innerHTML = 'Remove topping';
-            // Add class for styling
-            element.classList.add('removed');
-            element.classList.remove('added');
+            if (child.visible) {
+              // Change the topping text
+              element.innerHTML = 'Remove topping';
+              // Add class for styling
+              element.classList.add('removed');
+              element.classList.remove('added');
 
-            // Show the topping colors HTML
-            element.nextElementSibling.style.display = 'flex';
-            element.nextElementSibling.style.flexDirection = 'column';
-            element.nextElementSibling.style.alignItems = 'flex-start';
-            element.nextElementSibling.style.justifyContent = 'flex-start';
-            element.nextElementSibling.style.marginTop = '10px';
-            element.nextElementSibling.style.padding = '10px';
-          } else {
-            // Change the topping text back to "Add topping"
-            element.innerHTML = 'Add topping';
-            // Add class for styling
-            element.classList.add('added');
-            element.classList.remove('removed');
+              // Show the topping colors HTML
+              element.nextElementSibling.style.display = 'flex';
+              element.nextElementSibling.style.flexDirection = 'column';
+              element.nextElementSibling.style.alignItems = 'flex-start';
+              element.nextElementSibling.style.justifyContent = 'flex-start';
+              element.nextElementSibling.style.marginTop = '10px';
+              element.nextElementSibling.style.padding = '10px';
+            } else {
+              // Change the topping text back to "Add topping"
+              element.innerHTML = 'Add topping';
+              // Add class for styling
+              element.classList.add('added');
+              element.classList.remove('removed');
 
-            // Hide the topping colors HTML
-            element.nextElementSibling.style.display = 'none';
+              // Hide the topping colors HTML
+              element.nextElementSibling.style.display = 'none';
+
+              // selectedDonut topping is no
+              selectedDonut.topping = 'no';
+
+            }
           }
-        }
-      });
-    }
+        });
+      }
+    });
   });
-});
 
   var toppingColourElements = document.querySelectorAll('.topping-colour');
   toppingColourElements.forEach(function (element) {
@@ -142,6 +154,7 @@ toppingElements.forEach(function (element) {
           if (child.name === 'topping' && child.isMesh) {
             child.material.opacity = 1;
             child.material.color.setHex(colour);
+            selectedDonut.topping = colour;
           }
         });
       }
@@ -149,28 +162,23 @@ toppingElements.forEach(function (element) {
   });
 });
 
-const selectedDonut = ref({
-  colour: '',
-  topping: 'no', // Default topping is "no"
-  id: null
-});
-
 const placeOrder = () => {
-  console.log('Place order:', selectedDonut.value);
+  console.log('click');
+
   // Check if a donut is selected
   if (selectedDonut.value.id) {
+    console.log('Place order:', selectedDonut.value);
     // Send the selectedDonut data to your Node.js API
     fetch('http://localhost:3000/donut', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(selectedDonut.value),
-      body: console.log(selectedDonut.value)
+      body: JSON.stringify(selectedDonut.value)
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Order placed:', data);
+        console.log('API Response:', data); // Log the API response data
         // Reset selectedDonut after placing the order
         selectedDonut.value = {
           colour: '',
