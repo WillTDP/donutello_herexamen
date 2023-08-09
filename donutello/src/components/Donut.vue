@@ -178,6 +178,7 @@ onMounted(() => {
       }
     });
   });*/
+
 });
 
 const placeOrder = () => {
