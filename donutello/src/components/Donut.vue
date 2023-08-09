@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
@@ -32,18 +32,18 @@ onMounted(() => {
     scene.add(donut.scene);
 
     // Access the 'glaze' object directly
-  const glazeObject = donut.scene.getObjectByName('glaze');
+    const glazeObject = donut.scene.getObjectByName('glaze');
 
-  // Check if the 'glaze' object is found and is an object3D
-  if (glazeObject && glazeObject.isObject3D) {
-    // Traverse the children of the 'glaze' object
-    glazeObject.traverse(function (child) {
-      if (child.name === 'topping' && child.isMesh) {
-        // Hide the topping by default
-        child.visible = false;
-      }
-    });
-  }
+    // Check if the 'glaze' object is found and is an object3D
+    if (glazeObject && glazeObject.isObject3D) {
+      // Traverse the children of the 'glaze' object
+      glazeObject.traverse(function (child) {
+        if (child.name === 'topping' && child.isMesh) {
+          // Hide the topping by default
+          child.visible = false;
+        }
+      });
+    }
   });
 
   camera.position.z = 5;
@@ -61,34 +61,36 @@ onMounted(() => {
 
   animate();
 
-var elements = document.querySelectorAll('.recolour');
-elements.forEach(function(element) {
-  element.addEventListener('click', function(e) {
-    e.preventDefault();
-    var colour = this.dataset.colour;
-    console.log(colour);
+  // Rest of your event listeners setup code
+  var elements = document.querySelectorAll('.recolour');
+  elements.forEach(function (element) {
+    element.addEventListener('click', function (e) {
+      e.preventDefault();
+      var colour = this.dataset.colour;
+      console.log(colour);
 
-    // Access the 'glaze' object directly
-    const glazeMesh = donut.scene.getObjectByName('glaze');
+      // Access the 'glaze' object directly
+      const glazeMesh = donut.scene.getObjectByName('glaze');
 
-    // Check if the 'glaze' object is found and is a mesh
-    if (glazeMesh && glazeMesh.isMesh) {
-      // Modify properties of the 'glaze' mesh (Torus.004)
-      glazeMesh.material.color.setHex(colour);
-    }
+      // Check if the 'glaze' object is found and is a mesh
+      if (glazeMesh && glazeMesh.isMesh) {
+        // Modify properties of the 'glaze' mesh (Torus.004)
+        glazeMesh.material.color.setHex(colour);
+      }
+
+      // Set the selected colour in the selectedDonut data
+      selectedDonut.colour = colour;
+    });
   });
-});
 
-
-var elements = document.querySelectorAll('.topping');
-elements.forEach(function(element) {
-  
-  element.addEventListener('click', function(e) {
+  var toppingElements = document.querySelectorAll('.topping');
+toppingElements.forEach(function (element) {
+  element.addEventListener('click', function (e) {
     e.preventDefault();
-    
+
     // Access the 'glaze' object directly
     const glazeObject = donut.scene.getObjectByName('glaze');
-    
+
     // Check if the 'glaze' object is found and is an object3D
     if (glazeObject && glazeObject.isObject3D) {
       // Traverse the children of the 'glaze' object
@@ -96,11 +98,11 @@ elements.forEach(function(element) {
         if (child.name === 'topping' && child.isMesh) {
           // Modify properties of the 'topping' mesh
           child.visible = !child.visible;
-          if (child.visible) {
 
+          if (child.visible) {
             // Change the topping text
             element.innerHTML = 'Remove topping';
-              // Add class for styling
+            // Add class for styling
             element.classList.add('removed');
             element.classList.remove('added');
 
@@ -111,22 +113,9 @@ elements.forEach(function(element) {
             element.nextElementSibling.style.justifyContent = 'flex-start';
             element.nextElementSibling.style.marginTop = '10px';
             element.nextElementSibling.style.padding = '10px';
-            //colour the topping
-            //parse the colour from topping-colour
-          var elements = document.querySelectorAll('.topping-colour');
-            elements.forEach(function(element) {
-              element.addEventListener('click', function(e) {
-              e.preventDefault();
-              var colour = this.dataset.colour;
-              console.log(colour);
-              child.material.opacity = 1;
-              child.material.color.setHex(colour);
-              });
-            });
           } else {
-            // Change the topping text
+            // Change the topping text back to "Add topping"
             element.innerHTML = 'Add topping';
-
             // Add class for styling
             element.classList.add('added');
             element.classList.remove('removed');
@@ -140,8 +129,60 @@ elements.forEach(function(element) {
   });
 });
 
+  var toppingColourElements = document.querySelectorAll('.topping-colour');
+  toppingColourElements.forEach(function (element) {
+    element.addEventListener('click', function (e) {
+      e.preventDefault();
+      var colour = this.dataset.colour;
 
+      // Access the 'glaze' object and modify its topping color
+      const glazeObject = donut.scene.getObjectByName('glaze');
+      if (glazeObject && glazeObject.isObject3D) {
+        glazeObject.traverse(function (child) {
+          if (child.name === 'topping' && child.isMesh) {
+            child.material.opacity = 1;
+            child.material.color.setHex(colour);
+          }
+        });
+      }
+    });
+  });
 });
+
+const selectedDonut = ref({
+  colour: '',
+  topping: 'no', // Default topping is "no"
+  id: null
+});
+
+const placeOrder = () => {
+  console.log('Place order:', selectedDonut.value);
+  // Check if a donut is selected
+  if (selectedDonut.value.id) {
+    // Send the selectedDonut data to your Node.js API
+    fetch('http://localhost:3000/donut', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(selectedDonut.value),
+      body: console.log(selectedDonut.value)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Order placed:', data);
+        // Reset selectedDonut after placing the order
+        selectedDonut.value = {
+          colour: '',
+          topping: 'no', // Reset topping to "no"
+          id: null
+        };
+      })
+      .catch((error) => {
+        console.error('Error placing order:', error);
+      });
+  }
+};
 </script>
 
 <template>
@@ -171,7 +212,7 @@ elements.forEach(function(element) {
         </div>
       </div>
     </div>
-    <a href="#" class="send">Order</a>
+    <a href="#" class="send" @click="placeOrder">Order</a>
     </div>
   </div>
 
