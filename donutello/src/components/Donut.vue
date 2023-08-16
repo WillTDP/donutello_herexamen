@@ -131,6 +131,8 @@ onMounted(() => {
                   console.log(colour);
                   child.material.opacity = 1;
                   child.material.color.setHex(colour);
+                  // Set the selected colour in the selectedDonut data
+                  selectedDonut.topping = colour;
                   });
                 });
                 
@@ -181,8 +183,9 @@ onMounted(() => {
 
 });
 
-const placeOrder = () => {
+function placeOrder() {
   console.log('click');
+  console.log(selectedDonut.value)
 
   // Check if a donut is selected
   if (selectedDonut.value.id) {
@@ -209,7 +212,7 @@ const placeOrder = () => {
         console.error('Error placing order:', error);
       });
   }
-};
+}
 </script>
 
 <template>
