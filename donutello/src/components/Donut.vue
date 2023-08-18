@@ -2,11 +2,11 @@
 import { onMounted, ref } from 'vue';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { useRouter } from 'vue-router';
 
 const selectedDonut = ref({
-  colour: '',
-  topping: 'no', // Default topping is "no"
-  id: null
+  colour: "",
+  topping: "no" // Default topping is "no"
 });
 
 
@@ -46,11 +46,18 @@ onMounted(() => {
     if (glazeObject && glazeObject.isObject3D) {
       // Traverse the children of the 'glaze' object
       glazeObject.traverse(function (child) {
+        // Check if the child is a mesh and glaze
+        if (child.name === 'glaze' && child.isMesh) {
+          // default glaze color is red
+          child.material.color.setHex(0xd52417);
+          selectedDonut.value.colour = "0xd52417";
+        }
         if (child.name === 'topping' && child.isMesh) {
           // default topping color is red
           child.material.color.setHex(0xd52417);
           // Hide the topping by default
           child.visible = false;
+          selectedDonut.value.topping = 'no';
         }
       });
     }
@@ -161,33 +168,12 @@ onMounted(() => {
     });
   });
 
- /*var toppingColourElements = document.querySelectorAll('.topping-colour');
-  toppingColourElements.forEach(function (element) {
-    element.addEventListener('click', function (e) {
-      e.preventDefault();
-      var colour = this.dataset.colour;
-
-      // Access the 'glaze' object and modify its topping color
-      const glazeObject = donut.scene.getObjectByName('glaze');
-      if (glazeObject && glazeObject.isObject3D) {
-        glazeObject.traverse(function (child) {
-          if (child.name === 'topping' && child.isMesh) {
-            child.material.opacity = 1;
-            child.material.color.setHex(colour);
-            selectedDonut.topping = colour;
-          }
-        });
-      } else {
-        console.log('No glaze object found');
-
-        // selectedDonut topping is no
-        selectedDonut.topping = 'no';
-      }
-    });
-  });*/
-
 });
 
+//define router
+const router = useRouter();
+
+//function to send the colour and topping data to the API and redirect to the order page
 function placeOrder() {
   console.log('click');
   console.log(selectedDonut.value)
@@ -195,6 +181,7 @@ function placeOrder() {
   // Check if a donut is selected
   if (selectedDonut.value !== null) {
     console.log('Place order:', selectedDonut.value);
+    console.log('Sending fetch request with data:', JSON.stringify(selectedDonut.value));
     // Send the selectedDonut data to your Node.js API
     fetch('http://localhost:3000/donut', {
       method: 'POST',
@@ -206,11 +193,15 @@ function placeOrder() {
       .then((response) => response.json())
       .then((data) => {
         console.log('API Response:', data); // Log the API response data
+        //get the id from the API
+        const createdId = data.id;
+        console.log('Created ID:', createdId);
+        // Redirect to the order page
+        router.push({ name: 'order', params: { id: createdId } });
         // Reset selectedDonut after placing the order
         selectedDonut.value = {
-          colour: '',
-          topping: 'no', // Reset topping to "no"
-          id: null
+          colour: "",
+          topping: "no" // Reset topping to "no"
         };
       })
       .catch((error) => {
@@ -248,8 +239,7 @@ function placeOrder() {
         </div>
       </div>
     </div>
-    <a href="#/order" class="send" @click="placeOrder">Order</a>
-    
+    <a href="#" class="send" @click="placeOrder">Order</a>
     </div>
   </div>
 

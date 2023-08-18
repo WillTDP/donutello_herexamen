@@ -7,7 +7,7 @@ import Order from './components/Order.vue'
 
 const routes = [
   { path: '/', component: Donut },
-  { path: '/order', component: Order }
+  { path: '/order/:id', name: 'order', component: Order },
 ];
 
 const router = createRouter({
