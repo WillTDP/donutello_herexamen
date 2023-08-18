@@ -183,7 +183,7 @@ function placeOrder() {
     console.log('Place order:', selectedDonut.value);
     console.log('Sending fetch request with data:', JSON.stringify(selectedDonut.value));
     // Send the selectedDonut data to your Node.js API
-    fetch('http://localhost:3000/donut', {
+    fetch('https://donutello-api-rc87.onrender.com/donut', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -196,13 +196,13 @@ function placeOrder() {
         //get the id from the API
         const createdId = data.id;
         console.log('Created ID:', createdId);
-        // Redirect to the order page
-        router.push({ name: 'order', params: { id: createdId } });
         // Reset selectedDonut after placing the order
         selectedDonut.value = {
           colour: "",
           topping: "no" // Reset topping to "no"
         };
+        // Redirect to the order page
+        router.push({ name: 'order', params: { id: createdId } });
       })
       .catch((error) => {
         console.error('Error placing order:', error);
