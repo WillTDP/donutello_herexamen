@@ -1,11 +1,14 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import Donut from './components/Donut.vue'
+import { onMounted, ref } from 'vue';
+import Donut from './components/Donut.vue';
+import Order from './components/Order.vue';
+
+
 </script>
 
 <template>
-<div>
-    <Donut />
+  <div>
+    <router-view></router-view>
   </div>
 </template>
 

@@ -9,6 +9,8 @@ const selectedDonut = ref({
   id: null
 });
 
+
+
 onMounted(() => {
   let donut = null;
 
@@ -87,7 +89,8 @@ onMounted(() => {
       }
 
       // Set the selected colour in the selectedDonut data
-      selectedDonut.colour = colour;
+      selectedDonut.value.colour = colour;
+      console.log("selectedDonut Glaze" + " " + selectedDonut.value.colour);
     });
   });
 
@@ -132,7 +135,8 @@ onMounted(() => {
                   child.material.opacity = 1;
                   child.material.color.setHex(colour);
                   // Set the selected colour in the selectedDonut data
-                  selectedDonut.topping = colour;
+                  selectedDonut.value.topping = colour;
+                  console.log("selectedDonut Topping" + " " + selectedDonut.value.topping);
                   });
                 });
                 
@@ -147,7 +151,8 @@ onMounted(() => {
               element.nextElementSibling.style.display = 'none';
 
               // selectedDonut topping is no
-              selectedDonut.topping = 'no';
+              selectedDonut.value.topping = 'no';
+              console.log("selectedDonut Topping" + " " + selectedDonut.value.topping);
 
             }
           }
@@ -188,7 +193,7 @@ function placeOrder() {
   console.log(selectedDonut.value)
 
   // Check if a donut is selected
-  if (selectedDonut.value.id) {
+  if (selectedDonut.value !== null) {
     console.log('Place order:', selectedDonut.value);
     // Send the selectedDonut data to your Node.js API
     fetch('http://localhost:3000/donut', {
@@ -213,6 +218,7 @@ function placeOrder() {
       });
   }
 }
+
 </script>
 
 <template>
@@ -242,7 +248,8 @@ function placeOrder() {
         </div>
       </div>
     </div>
-    <a href="#" class="send" @click="placeOrder">Order</a>
+    <a href="#/order" class="send" @click="placeOrder">Order</a>
+    
     </div>
   </div>
 
