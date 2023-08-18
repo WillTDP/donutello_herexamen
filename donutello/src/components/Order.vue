@@ -35,6 +35,9 @@ onMounted(async () => {
 <template>
     <div>
         <h1>Order {{ route.params.id }}</h1>
-        <p>Order your donut here!</p>
+        <ul>
+            <li>Colour: {{ colour }}</li>
+            <li>Topping: {{ topping }}</li>
+        </ul>
     </div>
 </template>
