@@ -6,7 +6,8 @@ import { useRouter } from 'vue-router';
 
 const selectedDonut = ref({
   colour: "",
-  topping: "no" // Default topping is "no"
+  topping: "no", // Default topping is "no"
+  name: ""
 });
 
 
@@ -168,6 +169,13 @@ onMounted(() => {
     });
   });
 
+//name input
+const nameInput = document.getElementById('nameinput'); // Get the name input element
+nameInput.addEventListener('input', function (e) { // Listen for input events
+  selectedDonut.value.name = e.target.value; // Update the selectedDonut name
+  console.log("selectedDonut Name" + " " + selectedDonut.value.name); // Log the selectedDonut name
+});
+
 });
 
 //define router
@@ -199,7 +207,8 @@ function placeOrder() {
         // Reset selectedDonut after placing the order
         selectedDonut.value = {
           colour: "",
-          topping: "no" // Reset topping to "no"
+          topping: "no", // Reset topping to "no"
+          name: ""
         };
         // Redirect to the order page
         router.push({ name: 'order', params: { id: createdId } });
@@ -238,6 +247,12 @@ function placeOrder() {
           </div>
         </div>
       </div>
+    <div>
+      <div class="nameinput">
+        <p>Name</p>
+        <input type="text" name="nameinput" id="nameinput" placeholder="Enter your name here"/>
+      </div>  
+    </div>
     </div>
     <a href="#" class="send" @click="placeOrder">Order</a>
     </div>
@@ -305,5 +320,12 @@ function placeOrder() {
   color: white;
   text-decoration: none;
   border-radius: 15px;
+}
+
+.nameinput{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 </style>

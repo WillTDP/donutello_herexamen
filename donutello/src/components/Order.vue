@@ -8,6 +8,7 @@ const route = useRoute();
 //define the variables
 const colour = ref('');
 const topping = ref('no');
+const name = ref('');
 
 //fetch the data from the API
 onMounted(async () => {
@@ -22,13 +23,11 @@ onMounted(async () => {
         console.log('API Response:', data);
         colour.value = data.colour;
         topping.value = data.topping;
+        name.value = data.name;
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 });
-
-
-
 
 </script>
 
@@ -38,6 +37,15 @@ onMounted(async () => {
         <ul>
             <li>Colour: {{ colour }}</li>
             <li>Topping: {{ topping }}</li>
+            <li>Name: {{ name }}</li>
         </ul>
+    </div>
+    <div>
+        <div>
+            <a href="/">Home</a>
+        </div>
+        <div>
+            <a href="/donut">Make a Donut</a>
+        </div> 
     </div>
 </template>
