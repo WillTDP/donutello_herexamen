@@ -55,7 +55,7 @@ onMounted(() => {
         }
         if (child.name === 'topping' && child.isMesh) {
           // default topping color is red
-          child.material.color.setHex(0xd52417);
+          child.material.color.setHex(0x54A232);
           // Hide the topping by default
           child.visible = false;
           selectedDonut.value.topping = 'no';
@@ -132,6 +132,9 @@ onMounted(() => {
               element.nextElementSibling.style.justifyContent = 'flex-start';
               element.nextElementSibling.style.marginTop = '10px';
               element.nextElementSibling.style.padding = '10px';
+              //set selectedDonut topping to the default green colour
+              selectedDonut.value.topping = '0x54A232';
+              console.log("selectedDonut Topping" + " " + selectedDonut.value.topping);
               //colour the topping
               //parse the colour from topping-colour
               var elements = document.querySelectorAll('.topping-colour');
@@ -173,7 +176,6 @@ onMounted(() => {
 const nameInput = document.getElementById('nameinput'); // Get the name input element
 nameInput.addEventListener('input', function (e) { // Listen for input events
   selectedDonut.value.name = e.target.value; // Update the selectedDonut name
-  console.log("selectedDonut Name" + " " + selectedDonut.value.name); // Log the selectedDonut name
 });
 
 });
