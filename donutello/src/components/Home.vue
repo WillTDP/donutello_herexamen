@@ -21,16 +21,16 @@ onMounted(async () => {
 });
 
     //remove a selected donut from the API
-    const removeDonut = (id) => {
-        console.log('Removing donut with ID:', id);
-        fetch(`https://donutello-api-rc87.onrender.com/donut/${id}`, {
+    const removeDonut = (_id) => {
+        console.log('Removing donut with ID:', _id);
+        fetch(`https://donutello-api-rc87.onrender.com/donut/${_id}`, {
             method: 'DELETE'
         })
             .then((response) => response.json())
             .then((data) => {
                 console.log('API Response:', data); // Log the API response data
                 // Remove the donut from the donuts array
-                donuts.value = donuts.value.filter((donut) => donut.id !== id); // Filter out the donut with the matching ID
+                donuts.value = donuts.value.filter((donut) => donut._id !== _id); // Filter out the donut with the matching ID
             })
             .catch((error) => {
                 console.error('Error removing donut:', error);
@@ -47,12 +47,12 @@ onMounted(async () => {
     <div class="donuts">
         <p>View other peoples donuts</p>
         <div v-for="donut in donuts" :key="donut.id">
-            <router-link :to="{ name: 'order', params: { id: donut.id } }">
+            <router-link :to="{ name: 'order', params: { id: donut._id } }">
                 <!--display donut colour id-->
                 <p>{{donut.colour}}</p>
             </router-link>
             <!--remove donut-->
-            <button @click="removeDonut(donut.id)">Remove</button>
+            <button @click="removeDonut(donut._id)">Remove</button>
         </div>
     </div>
   </div>

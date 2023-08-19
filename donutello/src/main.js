@@ -6,6 +6,7 @@ import Donut from './components/Donut.vue'
 import Order from './components/Order.vue'
 import Home from './components/Home.vue'
 
+
 const routes = [
     { path: '/', component: Home },
     { path: '/Donut', component: Donut },
