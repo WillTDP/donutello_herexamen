@@ -34,7 +34,7 @@ onMounted(() => {
 
   // load donut.glb
   const loader = new GLTFLoader();
-  loader.load('../../public/model/donut.glb', function (gltf) {
+  loader.load('model/donut.glb', function (gltf) {
     // scale
     donut = gltf;
     donut.scene.scale.set(35, 35, 35);
