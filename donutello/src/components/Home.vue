@@ -37,6 +37,34 @@ onMounted(async () => {
             });
     };
 
+    //map the colour hex from the donut.colour output to a colour name
+    const colourName = (colour) => {
+        switch (colour) {
+            case '0xd52417':
+                return 'red';
+            case '0x54A232':
+                return 'green';
+            case '0x6fa8dc':
+                return 'blue';
+            case 'no':
+                return 'no';
+        }
+    };
+
+    //map the colour hex from the donut.topping output to a colour name
+    const toppingName = (topping) => {
+        switch (topping) {
+            case '0xd52417':
+                return 'red';
+            case '0x54A232':
+                return 'green';
+            case '0x6fa8dc':
+                return 'blue';
+            case 'no':
+                return 'no';
+        }
+    };
+
 </script>
 
 <template>
@@ -49,7 +77,12 @@ onMounted(async () => {
         <div v-for="donut in donuts" :key="donut.id">
             <router-link :to="{ name: 'order', params: { id: donut._id } }">
                 <!--display donut colour id-->
-                <p>{{donut.colour}}</p>
+                <div>
+                    <p>{{ colourName(donut.colour) }} with</p>
+                    <!--display coloured donut topping or no topping-->
+                    <p v-if="donut.topping !== 'no'">{{ toppingName(donut.topping) }} topping</p>
+                    <p v-else>no topping</p>
+                </div>
             </router-link>
             <!--remove donut-->
             <button @click="removeDonut(donut._id)">Remove</button>
