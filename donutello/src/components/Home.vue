@@ -111,7 +111,6 @@ const handleMouseLeave = (donutId, donutColour) => { //donutColour is the hex va
     card.style.backgroundColor = ColourHex(donutColour); //change the background colour of the card to the donut colour
   }
 };
-
 </script>
 
 <template>
@@ -119,8 +118,8 @@ const handleMouseLeave = (donutId, donutColour) => { //donutColour is the hex va
     <h1>Home</h1>
     <p>order donuts here</p>
     <a href="/donut">Make Your Own Donut</a>
+    <p>View other peoples donuts</p>
     <div class="donuts">
-        <p>View other peoples donuts</p>
         <div v-for="donut in donuts" :key="donut.id">
             <router-link :to="{ name: 'order', params: { id: donut._id } }" class="card-container">
             <!--display donut colour id-->
@@ -150,9 +149,19 @@ const handleMouseLeave = (donutId, donutColour) => { //donutColour is the hex va
 </template>
 
 <style scoped>
+.donuts {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 1em;
+    text-decoration: none;
+}
 .card-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     margin: 1em;
@@ -160,13 +169,14 @@ const handleMouseLeave = (donutId, donutColour) => { //donutColour is the hex va
 }
 .card {
     position: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     width: 50px;
     height: 25px;
-    background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     transition: all 0.3s ease-in-out;
+    border-radius: 5%;
 }
 .card--display {
     display: flex;
