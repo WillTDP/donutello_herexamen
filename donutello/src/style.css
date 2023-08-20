@@ -36,13 +36,13 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%; /* Adjust this to your desired width */
-  background-color: #242424; /* Set the background color you want */
+  width: 20%; /* Adjust this to your desired width */
+  background-color: #310606; /* Set the background color you want */
   z-index: 1; /* Ensure the navbar is above other content */
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   flex-wrap: wrap;
   padding: 10px;
 }

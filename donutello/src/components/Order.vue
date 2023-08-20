@@ -33,19 +33,43 @@ onMounted(async () => {
 
 <template>
     <div>
-        <h1>Order {{ route.params.id }}</h1>
-        <ul>
-            <li>Colour: {{ colour }}</li>
-            <li>Topping: {{ topping }}</li>
-            <li>Name: {{ name }}</li>
-        </ul>
-    </div>
-    <div>
-        <div>
-            <a href="/">Home</a>
+        <h1>Order</h1>
+        <div class="order">
+            <div class="customer">
+                <p>Customer name:</p>
+                <p>{{ name }}</p>
+            </div>
+            <div class="colour">
+                <p>Colour:</p>
+                <p>{{ colour }}</p>
+            </div>
+            <div class="topping">
+                <p>Topping:</p>
+                <p>{{ topping }}</p>
+            </div>
         </div>
-        <div>
-            <a href="/donut">Make a Donut</a>
-        </div> 
     </div>
 </template>
+
+<style scoped>
+.order {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.customer {
+    border: 1px solid black;
+    padding: 10px;
+}
+.colour {
+    border: 1px solid black;
+    padding: 10px;
+}
+    
+.topping {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+</style>

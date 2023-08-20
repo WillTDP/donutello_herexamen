@@ -191,6 +191,11 @@ function placeOrder() {
   if (selectedDonut.value !== null) {
     console.log('Place order:', selectedDonut.value);
     console.log('Sending fetch request with data:', JSON.stringify(selectedDonut.value));
+    //make sure name is not empty
+    if (selectedDonut.value.name === "") {
+      alert("Please enter your name");
+      return;
+    }
     // Send the selectedDonut data to your Node.js API
     fetch('https://donutello-api-rc87.onrender.com/donut', {
       method: 'POST',
@@ -231,9 +236,9 @@ function placeOrder() {
       <div class="glaze"> 
         <p>Glazing Colour</p> 
         <div>
-          <a href="#" class="recolour" data-colour="0xd52417">Cherry </a>
-          <a href="#" class="recolour" data-colour="0x54A232">Lime </a>
-          <a href="#" class="recolour" data-colour="0x6fa8dc">Blackberry </a>
+          <a id="red" href="#" class="recolour" data-colour="0xd52417">Cherry </a>
+          <a id="green" href="#" class="recolour" data-colour="0x54A232">Lime </a>
+          <a id="blue" href="#" class="recolour" data-colour="0x6fa8dc">Blackberry </a>
         </div>
       </div>
       <div>
@@ -286,7 +291,26 @@ function placeOrder() {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;}
+  align-items: flex-start;
+}
+
+.glaze a {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: aqua;
+  color: white;
+  border-radius: 10px;
+}
+.glaze #red {
+  background-color: #d52417;
+}
+.glaze #green {
+  background-color: #54A232;
+}
+.glaze #blue {
+  background-color: #6fa8dc;
+}
 
 .topping {
   display: flex;
