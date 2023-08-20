@@ -228,12 +228,12 @@ function placeOrder() {
     <div id="container" style="width: 400px; height: 400px;"></div>
 
     <div class="buttons">
-      <div> 
+      <div class="glaze"> 
         <p>Glazing Colour</p> 
         <div>
-          <a href="#" class="recolour" data-colour="0xd52417">Red </a>
-          <a href="#" class="recolour" data-colour="0x54A232">Green </a>
-          <a href="#" class="recolour" data-colour="0x6fa8dc">Blue </a>
+          <a href="#" class="recolour" data-colour="0xd52417">Cherry </a>
+          <a href="#" class="recolour" data-colour="0x54A232">Lime </a>
+          <a href="#" class="recolour" data-colour="0x6fa8dc">Blackberry </a>
         </div>
       </div>
       <div>
@@ -282,6 +282,12 @@ function placeOrder() {
   margin-left: 20px;
 }
 
+.glaze p {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;}
+
 .topping {
   display: flex;
   flex-direction: row;
@@ -300,12 +306,19 @@ function placeOrder() {
 .topping.added {
   background-color: darkblue;
   color: white;
-
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  border-radius: 10px;
 }
 
 .topping.removed {
   color: white;
-  background-color: red;
+  background-color: #aa0707;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  border-radius: 10px;
 }
 
 .topping-colors {

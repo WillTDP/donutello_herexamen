@@ -30,7 +30,32 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #1a1a1a;
+  background-color: #242424;
+}
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%; /* Adjust this to your desired width */
+  background-color: #242424; /* Set the background color you want */
+  z-index: 1; /* Ensure the navbar is above other content */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.navbar a {
+  margin: 10px;
+  padding: 10px;
+}
+
+.navbar p {
+  margin: 10px;
+  padding: 10px;
+  font-size: larger;
 }
 
 h1 {
@@ -45,7 +70,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  color: #1a1a1a;
+  color: white ;
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
