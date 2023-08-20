@@ -1,5 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import { defineProps } from 'vue';
+
+const props = defineProps(['donuts']);
 
 //define the variables
 const donuts = ref([]);
@@ -50,6 +53,19 @@ onMounted(async () => {
                 return 'no';
         }
     };
+    //map the colour hex from the donut.colour output to a colour hex
+    const ColourHex = (colour) => {
+        switch (colour) {
+            case '0xd52417':
+                return '#d52417';
+            case '0x54A232':
+                return '#54A232';
+            case '0x6fa8dc':
+                return '#6fa8dc';
+            case 'no':
+                return 'no';
+        }
+    };
 
     //map the colour hex from the donut.topping output to a colour name
     const toppingName = (topping) => {
@@ -64,6 +80,37 @@ onMounted(async () => {
                 return 'no';
         }
     };
+    //map the colour hex from the donut.topping output to a colour hex
+    const ToppingHex = (topping) => {
+        switch (topping) {
+            case '0xd52417':
+                return '#d52417';
+            case '0x54A232':
+                return '#54A232';
+            case '0x6fa8dc':
+                return '#6fa8dc';
+            case 'no':
+                return 'no';
+        }
+    };
+
+
+let hoveredDonut = null;
+const handleMouseOver = (donutId, donutTopping) => { //donutTopping is the hex value of the donut topping
+  hoveredDonut = donutId; 
+  const card = document.getElementById(`card-${donutId}`); //get the card element by id to change the background colour
+  if (card) {
+    card.style.backgroundColor = ToppingHex(donutTopping); //change the background colour of the card to the donut topping
+  }
+};
+
+const handleMouseLeave = (donutId, donutColour) => { //donutColour is the hex value of the donut colour
+  hoveredDonut = null;  //reset the hoveredDonut variable
+  const card = document.getElementById(`card-${donutId}`); //get the card element
+  if (card) {
+    card.style.backgroundColor = ColourHex(donutColour); //change the background colour of the card to the donut colour
+  }
+};
 
 </script>
 
@@ -75,13 +122,24 @@ onMounted(async () => {
     <div class="donuts">
         <p>View other peoples donuts</p>
         <div v-for="donut in donuts" :key="donut.id">
-            <router-link :to="{ name: 'order', params: { id: donut._id } }">
-                <!--display donut colour id-->
-                <div>
-                    <p>{{ colourName(donut.colour) }} with</p>
+            <router-link :to="{ name: 'order', params: { id: donut._id } }" class="card-container">
+            <!--display donut colour id-->
+            <div
+                :id="`card-${donut._id}`" 
+                :class="['card']"
+                :style="{ backgroundColor: hoveredDonut === donut._id ? ToppingHex(donut.topping) : ColourHex(donut.colour) }"
+                @mouseover="handleMouseOver(donut._id, donut.topping)"
+                @mouseleave="handleMouseLeave(donut._id, donut.colour)"
+            > <!--change the background colour of the card to the donut colour-->                    
+                    <div class="card--display">
+                        <p>{{ colourName(donut.colour) }} with</p>
+                    </div>
                     <!--display coloured donut topping or no topping-->
-                    <p v-if="donut.topping !== 'no'">{{ toppingName(donut.topping) }} topping</p>
-                    <p v-else>no topping</p>
+                    <div class="card--hover">
+                        <p v-if="donut.topping !== 'no'">{{ toppingName(donut.topping) }} topping</p>
+                        <p v-else>no topping</p>
+                    </div>
+                    <div class="card--border"></div>
                 </div>
             </router-link>
             <!--remove donut-->
@@ -90,3 +148,48 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1em;
+    text-decoration: none;
+}
+.card {
+    position: flex;
+    flex-direction: column;
+    width: 50px;
+    height: 25px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+.card--display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    transition: all 0.3s ease-in-out;
+    color: #fff;
+}
+.card--hover {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #fff;
+}
+.card:hover .card--display{
+    display: none;
+}
+.card:hover .card--hover {
+    display: flex;
+}
+
+</style>
