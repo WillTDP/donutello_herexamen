@@ -352,7 +352,7 @@ h2 {
 
 .topping.removed {
   color: white;
-  background-color: #aa0707;
+  background-color: #bf0606;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 15px;
