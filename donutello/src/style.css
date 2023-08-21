@@ -47,9 +47,9 @@ body {
   padding: 10px;
   border-radius: 15px;
 }
-@media screen and (max-width: 1210px) {
+@media screen and (max-width: 1216px) {
   .navbar {
-    width: 40%;
+    width: 25%;
   }
 }
 
