@@ -236,9 +236,9 @@ function placeOrder() {
       <div class="glaze"> 
         <p>Glazing Colour</p> 
         <div>
-          <a id="red" href="#" class="recolour" data-colour="0xd52417">Cherry </a>
-          <a id="green" href="#" class="recolour" data-colour="0x54A232">Lime </a>
-          <a id="blue" href="#" class="recolour" data-colour="0x6fa8dc">Blackberry </a>
+          <a id="red" href="#" class="recolour" data-colour="0xd52417">Cherry</a>
+          <a id="green" href="#" class="recolour" data-colour="0x54A232">Lime</a>
+          <a id="blue" href="#" class="recolour" data-colour="0x6fa8dc">Blackberry</a>
         </div>
       </div>
       <div>

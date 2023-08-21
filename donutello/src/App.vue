@@ -8,7 +8,7 @@ import Order from './components/Order.vue';
 <template>
   <div id="app">
     <div class="navbar">
-      <p>Donutello</p>
+      <img src="public/logo.png" alt="Donutello Logo">
       <a href="/">Home</a>
       <a href="/donut">Make a Donut</a>
     </div>
@@ -19,5 +19,9 @@ import Order from './components/Order.vue';
 </template>
 
 <style scoped>
-
+img {
+  width: auto;
+  height: 50px;
+  margin: 1em;
+}
 </style>

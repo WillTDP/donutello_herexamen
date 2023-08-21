@@ -115,11 +115,14 @@ const handleMouseLeave = (donutId, donutColour) => { //donutColour is the hex va
 
 <template>
   <div>
-    <h1>Home</h1>
-    <p>order donuts here</p>
-    <a href="/donut">Make Your Own Donut</a>
-    <p>View other peoples donuts</p>
-    <div class="donuts">
+    <img src="public/logo.png" alt="Donutello Logo" class="logo">
+    <div class="txt">
+        <p>Donutello is the place to imagine your own donuts! Choose the colour of your glazing and toppings!.</p>
+        <a href="/donut">Make Your Own Donut</a>
+    </div>
+    <div class="inspiration">
+        <h2>View other peoples donuts</h2>
+        <div class="donuts">
         <div v-for="donut in donuts" :key="donut.id">
             <router-link :to="{ name: 'order', params: { id: donut._id } }" class="card-container">
             <!--display donut colour id-->
@@ -144,18 +147,70 @@ const handleMouseLeave = (donutId, donutColour) => { //donutColour is the hex va
             <!--remove donut-->
             <button @click="removeDonut(donut._id)">Remove</button>
         </div>
+        </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.logo {
+    width: auto;
+    height: 150px;
+    margin: 1em;
+}
+.txt {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+    padding-bottom: 2em;
+    text-decoration: none;
+}
+.txt p {
+    margin: 1em;
+    margin-bottom: 0.5em;
+    text-decoration: none;
+    width: 50%;
+    text-align: left;
+}
+.txt a {
+    margin: 1em;
+    margin-bottom: 0.5em;
+    text-decoration: none;
+    color: #eee;
+    background-color: rgb(201, 70, 231);
+    border-radius: 15px;
+    padding: 1em;
+    
+}
+.txt a:hover {
+    background-color: rgb(185, 14, 40);
+}
+.inspiration {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 1em;
+    padding-bottom: 2em;
+    text-decoration: none;
+    background-color: rgb(14, 185, 185);
+    border-radius: 15px;
+}
+
+.inspiration h2 {
+    margin: 1em;
+    margin-bottom: 0.5em;
+    text-decoration: none;
+    color: #eee;
+}
 .donuts {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin: 1em;
     text-decoration: none;
 }
 .card-container {
