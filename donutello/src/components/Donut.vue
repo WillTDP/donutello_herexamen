@@ -383,6 +383,10 @@ h2 {
   border-radius: 15px;
 }
 
+.send:hover {
+  background-color: #aa0707;
+}
+
 .nameinput{
   display: flex;
   flex-direction: column;
