@@ -21,7 +21,7 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  background-color: #aa0707;
 }
 
 body {
@@ -72,7 +72,7 @@ button {
   font-weight: 500;
   font-family: inherit;
   color: white ;
-  background-color: #1a1a1a;
+  background-color: #bf0606;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -101,7 +101,7 @@ button:focus-visible {
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    background-color: #aa0707;
   }
   button {
     background-color: #bf0606;
