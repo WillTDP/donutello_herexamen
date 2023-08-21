@@ -22,7 +22,7 @@ onMounted(() => {
     1000
   );
 
-  const renderer = new THREE.WebGLRenderer();
+  var renderer = new THREE.WebGLRenderer( { alpha: true } );
   renderer.setSize(400, 400); // Adjusted width and height
   document.getElementById('container').appendChild(renderer.domElement);
 
@@ -247,16 +247,16 @@ function placeOrder() {
         <div>
           <a href="#" class="topping added">Add topping</a>
           <div class="topping-colors">
-            <a href="#" class="topping-colour" data-colour="0xd52417">Red Topping </a>
-            <a href="#" class="topping-colour" data-colour="0x54A232">Green Topping </a>
-            <a href="#" class="topping-colour" data-colour="0x6fa8dc">Blue Topping </a>
+            <a id="redtopping" href="#" class="topping-colour" data-colour="0xd52417">Red Topping </a>
+            <a id="greentopping" href="#" class="topping-colour" data-colour="0x54A232">Green Topping </a>
+            <a id="bluetopping" href="#" class="topping-colour" data-colour="0x6fa8dc">Blue Topping </a>
           </div>
         </div>
       </div>
     <div>
       <div class="nameinput">
         <p>Name</p>
-        <input type="text" name="nameinput" id="nameinput" placeholder="Enter your name here"/>
+        <input class="inputname" type="text" name="nameinput" id="nameinput" placeholder="Enter your name here"/>
       </div>  
     </div>
     </div>
@@ -349,6 +349,25 @@ function placeOrder() {
   display: none;
 }
 
+.topping-colors a {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: aqua;
+  color: white;
+  border-radius: 10px;
+}
+
+.topping-colors #redtopping {
+  background-color: #d52417;
+}
+.topping-colors #greentopping {
+  background-color: #54A232;
+}
+.topping-colors #bluetopping {
+  background-color: #6fa8dc;
+}
+
 .send {
   margin-top: 20px;
   padding: 10px;
@@ -365,5 +384,10 @@ function placeOrder() {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+}
+.inputname{
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid black;
 }
 </style>
