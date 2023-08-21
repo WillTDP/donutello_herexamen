@@ -316,6 +316,16 @@ h2 {
   background-color: #6fa8dc;
 }
 
+.glaze #red:hover {
+  background-color: #aa0707;
+}
+.glaze #green:hover {
+  background-color: #aa0707;
+}
+.glaze #blue:hover {
+  background-color: #aa0707;
+}
+
 .topping {
   display: flex;
   flex-direction: row;
@@ -349,6 +359,13 @@ h2 {
   border-radius: 10px;
 }
 
+.topping.added:hover {
+  background-color: #aa0707;
+}
+.topping.removed:hover {
+  background-color: #aa0707;
+}
+
 .topping-colors {
   display: none;
 }
@@ -371,6 +388,17 @@ h2 {
 .topping-colors #bluetopping {
   background-color: #6fa8dc;
 }
+
+.topping-colors #redtopping:hover {
+  background-color: #aa0707;
+}
+.topping-colors #greentopping:hover {
+  background-color: #aa0707;
+}
+.topping-colors #bluetopping:hover {
+  background-color: #aa0707;
+}
+
 
 .send {
   margin-top: 20px;
