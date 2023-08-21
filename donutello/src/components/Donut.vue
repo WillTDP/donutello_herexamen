@@ -228,7 +228,7 @@ function placeOrder() {
 </script>
 
 <template>
-
+  <h2>Customise your donut</h2>
   <div class="everything">
     <div id="container" style="width: 400px; height: 400px;"></div>
 
@@ -267,6 +267,10 @@ function placeOrder() {
 </template>
 
 <style scoped>
+
+h2 {
+  text-align: left;
+}
 .everything {
   display: flex;
   flex-direction: row;
