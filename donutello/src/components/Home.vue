@@ -115,7 +115,7 @@ const handleMouseLeave = (donutId, donutColour) => { //donutColour is the hex va
 
 <template>
   <div>
-    <img src="public/logo.png" alt="Donutello Logo" class="logo">
+    <img src="/logo.png" alt="Donutello Logo" class="logo">
     <div class="txt">
         <p>Donutello is the place to imagine your own donuts! Choose the colour of your glazing and toppings!.</p>
         <a href="/donut">Make Your Own Donut</a>
